@@ -1,0 +1,27 @@
+{
+  "name": "itgold-contracts",
+  "version": "1.0.0",
+  "description": "Secure Smart Contract library for Solidity",
+  "files": [
+    "/contracts/**",
+    "/demo/**/"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/itgoldio/everscale-tip4.git"
+  },
+  "author": "Itgold <https://itgold.io/>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/itgoldio/everscale-tip4/issues"
+  },
+  "homepage": "https://github.com/itgoldio/everscale-tip4#readme",
+  "keywords": [
+    "solidity",
+    "everscale",
+    "smart",
+    "contracts",
+    "security",
+    "Itgold"
+  ]
+}

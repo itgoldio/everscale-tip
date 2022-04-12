@@ -1,10 +1,9 @@
 {
-  "name": "itgold-contracts",
+  "name": "@itgold/tips",
   "version": "1.0.0",
   "description": "Secure Smart Contract library for Solidity",
   "files": [
-    "/contracts/**",
-    "/demo/**/"
+    "/contracts/**"
   ],
   "repository": {
     "type": "git",

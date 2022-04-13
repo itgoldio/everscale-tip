@@ -129,10 +129,10 @@ contract Collection is TIP4_1Collection, OwnableExternal {
 
 # Build project
 
-1. Change [locklift.config.js](locklift.config.js)
+1. Change ```locklift.config.js```
    1. update paths for ``compiler``, ``linker`` 
    1. Run: ``export TVM_LINKER_LIB_PATH=path to stdlib_sol.tvm``
-1. Change ``package.json`` file
+1. Change ```package.json``` file
    1. add ``"build": "locklift build --config locklift.config.js"`` to ``scripts`` section
 1. Build contracts. Run ```npm run build```
 

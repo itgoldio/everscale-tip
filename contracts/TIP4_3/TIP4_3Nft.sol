@@ -78,11 +78,11 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
     }
     
     function indexCode() external view override responsible returns (TvmCell code) {
-        return {value: 0, flag: 64} (_codeIndex);
+        return {value: 0, flag: 64, bounce: false} (_codeIndex);
     }
 
     function indexCodeHash() public view override responsible returns (uint256 hash) {
-        return {value: 0, flag: 64} tvm.hash(_codeIndex);
+        return {value: 0, flag: 64, bounce: false} tvm.hash(_codeIndex);
     }
 
     function resolveIndex(address collection, address owner) public view override responsible returns (address index) {
@@ -90,7 +90,7 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         TvmCell state = _buildIndexState(code, address(this));
         uint256 hashState = tvm.hash(state);
         index = address.makeAddrStd(0, hashState);
-        return {value: 0, flag: 64} index;
+        return {value: 0, flag: 64, bounce: false} index;
     }
 
     function _buildIndexCode(
@@ -128,11 +128,11 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
     }
 
     function indexDeployValue() public view responsible returns(uint128) {
-        return {value: 0, flag: 64} _indexDeployValue;
+        return {value: 0, flag: 64, bounce: false} _indexDeployValue;
     }
 
     function indexDestroyValue() public view responsible returns(uint128) {
-        return {value: 0, flag: 64} _indexDestroyValue;
+        return {value: 0, flag: 64, bounce: false} _indexDestroyValue;
     }
 
 }

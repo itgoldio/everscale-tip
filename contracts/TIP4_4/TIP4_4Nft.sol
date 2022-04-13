@@ -42,7 +42,7 @@ abstract contract TIP4_4Nft is TIP4_1Nft, ITIP4_4NFT {
     }
 
     function getStorage() external view override responsible returns (address addr) {
-        return {value: 0, flag: 64} (_storage);
+        return {value: 0, flag: 64, bounce: false} (_storage);
     }
 
     modifier onlyManager virtual override {

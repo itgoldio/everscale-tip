@@ -61,7 +61,7 @@ contract Storage is ITIP4_4Storage {
         string mimeType,
         mapping(uint8 => bytes) content
     ) {
-        return {value: 0, flag: 64} (
+        return {value: 0, flag: 64, bounce: false} (
             _nft, 
             _collection,
             _mimeType,

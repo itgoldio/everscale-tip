@@ -57,7 +57,7 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
     /// Can be called only by owner pubkey
     /// _codeIndexBasis can't be empty
     /// Balance value must be greater than _indexDeployValue
-    function deployIndexBasis() external view responsible onlyOwner returns (address indexBasis) {
+    function deployIndexBasis() external view onlyOwner returns (address indexBasis) {
         TvmCell empty;
         require(_codeIndexBasis != empty, CollectionErrors.value_is_empty);
         require(address(this).balance > _deployIndexBasisValue);
@@ -65,7 +65,7 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
         TvmCell code = _buildIndexBasisCode();
         TvmCell state = _buildIndexBasisState(code, address(this));
         indexBasis = new IndexBasis{stateInit: state, value: _deployIndexBasisValue}();
-        return {value: 0, flag: 64} (indexBasis);
+        return (indexBasis);
     }
 
     /// @param codeIndexBasis - code of IndexBasis contract
@@ -75,12 +75,12 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
 
     /// @return code - code of IndexBasis contract
     function indexBasisCode() external view override responsible returns (TvmCell code) {
-        return {value: 0, flag: 64} (_codeIndexBasis);
+        return {value: 0, flag: 64, bounce: false} (_codeIndexBasis);
     }   
 
     /// @return hash - calculated hash based on the IndexBasis code
     function indexBasisCodeHash() external view override responsible returns (uint256 hash) {
-        return {value: 0, flag: 64} tvm.hash(_buildIndexBasisCode());
+        return {value: 0, flag: 64, bounce: false} tvm.hash(_buildIndexBasisCode());
     }
 
     /// @return indexBasis - address of IndexBasisCode
@@ -89,7 +89,7 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
         TvmCell state = _buildIndexBasisState(code, address(this));
         uint256 hashState = tvm.hash(state);
         indexBasis = address.makeAddrStd(0, hashState);
-        return {value: 0, flag: 64} indexBasis;
+        return {value: 0, flag: 64, bounce: false} indexBasis;
     }
 
     /// @notice build IndexBasis code used TvmCell indexBasis code & salt (string stamp)
@@ -120,12 +120,12 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
 
     /// @return code - code of Index contract
     function indexCode() external view override responsible returns (TvmCell code) {
-        return {value: 0, flag: 64} (_codeIndex);
+        return {value: 0, flag: 64, bounce: false} (_codeIndex);
     }
 
     /// @return hash - calculated hash based on the Index code
     function indexCodeHash() external view override responsible returns (uint256 hash) {
-        return {value: 0, flag: 64} tvm.hash(_codeIndex);
+        return {value: 0, flag: 64, bounce: false} tvm.hash(_codeIndex);
     }
 
     /// @notice build Index code used TvmCell index code & salt (string stamp, address collection, address owner)

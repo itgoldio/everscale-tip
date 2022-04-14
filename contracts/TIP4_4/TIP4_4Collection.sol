@@ -13,6 +13,12 @@ import './TIP4_4Nft.sol';
 
 abstract contract TIP4_4Collection is TIP4_1Collection, ITIP4_4Collection {
     
+    /**
+    * Errors
+    **/
+    uint8 constant value_is_empty = 103;
+
+
     TvmCell _codeStorage;
 
     uint128 _storageDeployValue = 0.5 ever;
@@ -21,7 +27,7 @@ abstract contract TIP4_4Collection is TIP4_1Collection, ITIP4_4Collection {
         TvmCell codeStorage
     ) public {
         TvmCell empty;
-        require(codeStorage != empty, CollectionErrors.value_is_empty);
+        require(codeStorage != empty, value_is_empty);
         tvm.accept();
 
         _codeStorage = codeStorage;

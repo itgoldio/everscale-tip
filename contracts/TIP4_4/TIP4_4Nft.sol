@@ -44,7 +44,7 @@ abstract contract TIP4_4Nft is TIP4_1Nft, ITIP4_4NFT {
     }
 
     modifier onlyManager virtual override {
-        require(msg.sender == _manager, NftErrors.sender_is_not_manager);
+        require(msg.sender == _manager, TIP4_1Nft.sender_is_not_manager);
         require(_active);
         _;
     }

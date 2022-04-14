@@ -17,6 +17,11 @@ import './IndexBasis.sol';
 
 /// This contract implement TIP4_1Collection, ITIP4_3Collection (add indexes) and OwnableExternal for add owner role
 abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, OwnableExternal {
+
+    /**
+    * Errors
+    **/
+    uint8 constant value_is_empty = 103;
     
     /// TvmCell object code of Index contract
     TvmCell _codeIndex;
@@ -37,7 +42,7 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
         ownerPubkey
     ) public {
         TvmCell empty;
-        require(codeIndex != empty, CollectionErrors.value_is_empty);
+        require(codeIndex != empty, value_is_empty);
         tvm.accept();
 
         _codeIndex = codeIndex;

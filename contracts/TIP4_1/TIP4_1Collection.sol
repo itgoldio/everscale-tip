@@ -10,7 +10,6 @@ pragma AbiHeader pubkey;
 
 import '../TIP6/TIP6.sol';
 import './interfaces/ITIP4_1Collection.sol';
-import './errors/CollectionErrors.sol';
 import './TIP4_1Nft.sol';
 
 

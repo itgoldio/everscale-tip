@@ -12,8 +12,6 @@ import './interfaces/ITIP4_1NFT.sol';
 import './interfaces/INftChangeOwner.sol';
 import './interfaces/INftChangeManager.sol';
 
-import './errors/NftErrors.sol';
-
 import '../TIP6/TIP6.sol';
 
 
@@ -22,6 +20,14 @@ import '../TIP6/TIP6.sol';
 /// For detect what interfaces a smart contract implements used TIP-6.1 standard. ...
 /// ... Read more here (https://github.com/nftalliance/docs/blob/main/src/Standard/TIP-6/1.md)
 contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
+
+    /**
+    * Errors
+    **/
+    uint8 constant value_is_empty = 101;
+    uint8 constant sender_is_not_collection = 102;
+    uint8 constant sender_is_not_manager = 103;
+    uint8 constant value_is_less_than_required = 104;
 
     /// Unique NFT id
     uint256 static _id;
@@ -47,11 +53,11 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
         uint128 remainOnNft
     ) public {
         optional(TvmCell) optSalt = tvm.codeSalt(tvm.code());
-        require(optSalt.hasValue(), NftErrors.value_is_empty);
+        require(optSalt.hasValue(), value_is_empty);
         (address collection) = optSalt.get().toSlice().decode(address);
-        require(msg.sender == collection, NftErrors.sender_is_not_collection);
-        require(remainOnNft != 0, NftErrors.value_is_empty);
-        require(msg.value > remainOnNft, NftErrors.value_is_less_than_required);
+        require(msg.sender == collection, sender_is_not_collection);
+        require(remainOnNft != 0, value_is_empty);
+        require(msg.value > remainOnNft, value_is_less_than_required);
         tvm.rawReserve(remainOnNft, 0);
 
         _collection = collection;
@@ -236,7 +242,7 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
     ) internal virtual {}
 
     modifier onlyManager virtual {
-        require(msg.sender == _manager, NftErrors.sender_is_not_manager);
+        require(msg.sender == _manager, sender_is_not_manager);
         _;
     }
 }

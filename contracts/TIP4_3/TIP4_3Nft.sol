@@ -87,7 +87,7 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         TvmCell code = _buildIndexCode(collection, owner);
         TvmCell state = _buildIndexState(code, address(this));
         uint256 hashState = tvm.hash(state);
-        index = address.makeAddrStd(0, hashState);
+        index = address.makeAddrStd(address(this).wid, hashState);
         return {value: 0, flag: 64, bounce: false} index;
     }
 

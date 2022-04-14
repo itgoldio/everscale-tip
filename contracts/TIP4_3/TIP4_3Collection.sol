@@ -88,7 +88,7 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
         TvmCell code = _buildIndexBasisCode();
         TvmCell state = _buildIndexBasisState(code, address(this));
         uint256 hashState = tvm.hash(state);
-        indexBasis = address.makeAddrStd(0, hashState);
+        indexBasis = address.makeAddrStd(address(this).wid, hashState);
         return {value: 0, flag: 64, bounce: false} indexBasis;
     }
 

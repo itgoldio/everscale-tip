@@ -27,8 +27,6 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         uint128 indexDestroyValue,
         TvmCell codeIndex
     ) public {
-        tvm.accept();
-
         _indexDeployValue = indexDeployValue;
         _indexDestroyValue = indexDestroyValue;
         _codeIndex = codeIndex;

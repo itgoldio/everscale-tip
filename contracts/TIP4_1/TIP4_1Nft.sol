@@ -52,7 +52,7 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
         require(msg.sender == collection, NftErrors.sender_is_not_collection);
         require(remainOnNft != 0, NftErrors.value_is_empty);
         require(msg.value > remainOnNft, NftErrors.value_is_less_than_required);
-        tvm.accept();
+        // tvm.accept();
         tvm.rawReserve(remainOnNft, 0);
 
         _collection = collection;

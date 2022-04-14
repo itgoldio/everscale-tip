@@ -21,8 +21,6 @@ abstract contract TIP4_4Nft is TIP4_1Nft, ITIP4_4NFT {
     constructor(
         address storageAddr
     ) public {
-        tvm.accept();
-
         _storage = storageAddr;
 
         _supportedInterfaces[

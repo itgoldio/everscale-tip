@@ -113,24 +113,4 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         });
     }
 
-    function setIndexDeployValue(uint128 indexDeployValue) public onlyManager {
-        tvm.rawReserve(0, 4);
-        _indexDeployValue = indexDeployValue;
-        msg.sender.transfer({value: 0, flag: 128});
-    }
-
-    function setIndexDestroyValue(uint128 indexDestroyValue) public onlyManager {
-        tvm.rawReserve(0, 4);
-        _indexDestroyValue = indexDestroyValue;
-        msg.sender.transfer({value: 0, flag: 128});
-    }
-
-    function indexDeployValue() public view responsible returns(uint128) {
-        return {value: 0, flag: 64, bounce: false} _indexDeployValue;
-    }
-
-    function indexDestroyValue() public view responsible returns(uint128) {
-        return {value: 0, flag: 64, bounce: false} _indexDestroyValue;
-    }
-
 }

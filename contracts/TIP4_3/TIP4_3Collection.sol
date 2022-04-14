@@ -56,26 +56,21 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
             bytes4(tvm.functionId(ITIP4_3Collection.resolveIndexBasis))
         ] = true;
 
+        _deployIndexBasis();
+
     }
 
-    /// @return indexBasis - Address of the deployed IndexBasis contract
     /// Can be called only by owner pubkey
     /// _codeIndexBasis can't be empty
     /// Balance value must be greater than _indexDeployValue
-    function deployIndexBasis() external view onlyOwner returns (address indexBasis) {
+    function _deployIndexBasis() internal virtual {
         TvmCell empty;
-        require(_codeIndexBasis != empty, CollectionErrors.value_is_empty);
+        require(_codeIndexBasis != empty, value_is_empty);
         require(address(this).balance > _deployIndexBasisValue);
 
         TvmCell code = _buildIndexBasisCode();
         TvmCell state = _buildIndexBasisState(code, address(this));
-        indexBasis = new IndexBasis{stateInit: state, value: _deployIndexBasisValue}();
-        return (indexBasis);
-    }
-
-    /// @param codeIndexBasis - code of IndexBasis contract
-    function setIndexBasisCode(TvmCell codeIndexBasis) external virtual onlyOwner {
-        _codeIndexBasis = codeIndexBasis;
+        address indexBasis = new IndexBasis{stateInit: state, value: _deployIndexBasisValue}();
     }
 
     /// @return code - code of IndexBasis contract

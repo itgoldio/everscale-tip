@@ -8,15 +8,14 @@ pragma AbiHeader pubkey;
 
 
 import '../TIP4_1/TIP4_1Collection.sol';
-import '../access/OwnableExternal.sol';
 import './interfaces/ITIP4_3Collection.sol';
 import './TIP4_3Nft.sol';
 import './Index.sol';
 import './IndexBasis.sol';
 
 
-/// This contract implement TIP4_1Collection, ITIP4_3Collection (add indexes) and OwnableExternal for add owner role
-abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, OwnableExternal {
+/// This contract implement TIP4_1Collection, ITIP4_3Collection (add indexes)
+abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection {
 
     /**
     * Errors
@@ -36,10 +35,7 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
 
     constructor(
         TvmCell codeIndex,
-        TvmCell codeIndexBasis,
-        uint256 ownerPubkey
-    ) OwnableExternal(
-        ownerPubkey
+        TvmCell codeIndexBasis
     ) public {
         TvmCell empty;
         require(codeIndex != empty, value_is_empty);
@@ -60,7 +56,6 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
 
     }
 
-    /// Can be called only by owner pubkey
     /// _codeIndexBasis can't be empty
     /// Balance value must be greater than _indexDeployValue
     function _deployIndexBasis() internal virtual {

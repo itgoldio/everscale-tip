@@ -17,6 +17,11 @@ import './IndexBasis.sol';
 
 /// This contract implement TIP4_1Collection, ITIP4_3Collection (add indexes) and OwnableExternal for add owner role
 abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, OwnableExternal {
+
+    /**
+    * Errors
+    **/
+    uint8 constant value_is_empty = 103;
     
     /// TvmCell object code of Index contract
     TvmCell _codeIndex;
@@ -37,7 +42,7 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
         ownerPubkey
     ) public {
         TvmCell empty;
-        require(codeIndex != empty, CollectionErrors.value_is_empty);
+        require(codeIndex != empty, value_is_empty);
         tvm.accept();
 
         _codeIndex = codeIndex;
@@ -51,26 +56,21 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
             bytes4(tvm.functionId(ITIP4_3Collection.resolveIndexBasis))
         ] = true;
 
+        _deployIndexBasis();
+
     }
 
-    /// @return indexBasis - Address of the deployed IndexBasis contract
     /// Can be called only by owner pubkey
     /// _codeIndexBasis can't be empty
     /// Balance value must be greater than _indexDeployValue
-    function deployIndexBasis() external view onlyOwner returns (address indexBasis) {
+    function _deployIndexBasis() internal virtual {
         TvmCell empty;
-        require(_codeIndexBasis != empty, CollectionErrors.value_is_empty);
+        require(_codeIndexBasis != empty, value_is_empty);
         require(address(this).balance > _deployIndexBasisValue);
 
         TvmCell code = _buildIndexBasisCode();
         TvmCell state = _buildIndexBasisState(code, address(this));
-        indexBasis = new IndexBasis{stateInit: state, value: _deployIndexBasisValue}();
-        return (indexBasis);
-    }
-
-    /// @param codeIndexBasis - code of IndexBasis contract
-    function setIndexBasisCode(TvmCell codeIndexBasis) external virtual onlyOwner {
-        _codeIndexBasis = codeIndexBasis;
+        address indexBasis = new IndexBasis{stateInit: state, value: _deployIndexBasisValue}();
     }
 
     /// @return code - code of IndexBasis contract
@@ -88,7 +88,7 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection, Ownab
         TvmCell code = _buildIndexBasisCode();
         TvmCell state = _buildIndexBasisState(code, address(this));
         uint256 hashState = tvm.hash(state);
-        indexBasis = address.makeAddrStd(0, hashState);
+        indexBasis = address.makeAddrStd(address(this).wid, hashState);
         return {value: 0, flag: 64, bounce: false} indexBasis;
     }
 

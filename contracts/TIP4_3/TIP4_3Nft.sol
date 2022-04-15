@@ -27,8 +27,6 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         uint128 indexDestroyValue,
         TvmCell codeIndex
     ) public {
-        tvm.accept();
-
         _indexDeployValue = indexDeployValue;
         _indexDestroyValue = indexDestroyValue;
         _codeIndex = codeIndex;
@@ -89,7 +87,7 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         TvmCell code = _buildIndexCode(collection, owner);
         TvmCell state = _buildIndexState(code, address(this));
         uint256 hashState = tvm.hash(state);
-        index = address.makeAddrStd(0, hashState);
+        index = address.makeAddrStd(address(this).wid, hashState);
         return {value: 0, flag: 64, bounce: false} index;
     }
 
@@ -113,26 +111,6 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
             varInit: {_nft: nft},
             code: code
         });
-    }
-
-    function setIndexDeployValue(uint128 indexDeployValue) public onlyManager {
-        tvm.rawReserve(0, 4);
-        _indexDeployValue = indexDeployValue;
-        msg.sender.transfer({value: 0, flag: 128});
-    }
-
-    function setIndexDestroyValue(uint128 indexDestroyValue) public onlyManager {
-        tvm.rawReserve(0, 4);
-        _indexDestroyValue = indexDestroyValue;
-        msg.sender.transfer({value: 0, flag: 128});
-    }
-
-    function indexDeployValue() public view responsible returns(uint128) {
-        return {value: 0, flag: 64, bounce: false} _indexDeployValue;
-    }
-
-    function indexDestroyValue() public view responsible returns(uint128) {
-        return {value: 0, flag: 64, bounce: false} _indexDestroyValue;
     }
 
 }

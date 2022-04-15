@@ -10,7 +10,6 @@ pragma AbiHeader pubkey;
 
 import '../TIP6/TIP6.sol';
 import './interfaces/ITIP4_1Collection.sol';
-import './errors/CollectionErrors.sol';
 import './TIP4_1Nft.sol';
 
 
@@ -74,7 +73,7 @@ contract TIP4_1Collection is ITIP4_1Collection, TIP6 {
         TvmCell code = _buildNftCode(address(this));
         TvmCell state = _buildNftState(code, id);
         uint256 hashState = tvm.hash(state);
-        nft = address.makeAddrStd(0, hashState);
+        nft = address.makeAddrStd(address(this).wid, hashState);
     }
 
     /// @notice build nft code used TvmCell nft code & salt (address collection) ... 

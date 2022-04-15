@@ -1,6 +1,6 @@
 {
   "name": "@itgold/everscale-tip",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "Secure Smart Contract library for Solidity",
   "files": [
     "/contracts/**"

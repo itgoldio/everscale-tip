@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.9.1 (2022-04-15)
+
+### Improvements
+ * Remove `OwnableExternal`, add `isOwner()`
+
 ## 0.9.0 (2022-04-14)
 
 ### Improvements

@@ -103,4 +103,8 @@ contract TIP4_1Collection is ITIP4_1Collection, TIP6 {
         });
     }
 
+    function isOwner() public virtual returns(bool) {
+        return true;
+    }
+
 }

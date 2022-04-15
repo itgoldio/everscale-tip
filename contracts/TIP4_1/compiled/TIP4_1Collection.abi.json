@@ -49,6 +49,14 @@
 			]
 		},
 		{
+			"name": "isOwner",
+			"inputs": [
+			],
+			"outputs": [
+				{"name":"value0","type":"bool"}
+			]
+		},
+		{
 			"name": "supportsInterface",
 			"inputs": [
 				{"name":"answerId","type":"uint32"},

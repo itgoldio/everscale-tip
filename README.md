@@ -6,23 +6,18 @@
 - Install [TON Solidity Compiler](https://github.com/tonlabs/TON-Solidity-Compiler.git)
 - Install [TVM linker](https://github.com/tonlabs/TVM-linker/releases/tag/0.14.2)
 - Install [nmp](https://www.npmjs.com/)
-- Install  [TON locklift](https://github.com/broxus/ton-locklift)
-- Install [tonos-cli](https://github.com/tonlabs/tonos-cli)
 
 # Initialize project
 
-```It will be easy soon```
-
 1. Create empty folder and move to it
-1. Initialize new [TON locklift](https://github.com/broxus/ton-locklift) project 
-   - Run: ```locklift init``` You can do it only in empty folder. 
-1. Init npm project. Run: ```npm init -y```
-1. Install itgold library for development NFT. Run: ```npm i @itgold/everscale-tip```
-1. Install [TON locklift](https://github.com/broxus/ton-locklift) directly for compile and deploy contracts. Run: ```npm i locklift```
-1. Delete ```contracts/Sample.sol``` file
-1. Create ```contracts/Nft.sol``` file
+1. Init npm project. ```npm init -y```
+1. Install itgold library for development NFT. ```npm i @itgold/everscale-tip```
 
-```
+# How to use library
+
+1. Create ```Nft.sol``` file and fill it.
+
+```solidity
 pragma ton-solidity = 0.58.1;
 
 pragma AbiHeader expire;
@@ -42,14 +37,14 @@ contract Nft is TIP4_1Nft {
         owner,
         sendGasTo,
         remainOnNft
-    ) public {
-        tvm.accept();
-    }
+    ) public {}
+
 }
 ```
-8. Create ```contracts/Collection.sol``` file
 
-```
+2. Create ```Collection.sol``` file and fill it.
+
+```solidity
 pragma ton-solidity = 0.58.1;
 
 pragma AbiHeader expire;
@@ -62,6 +57,12 @@ import '@itgold/everscale-tip/contracts/access/OwnableExternal.sol';
 import './Nft.sol';
 
 contract Collection is TIP4_1Collection, OwnableExternal {
+
+    /**
+    * Errors
+    **/
+    uint8 constant sender_is_not_owner = 100;
+    uint8 constant value_is_less_than_required = 101;
 
     /// _remainOnNft - the number of crystals that will remain after the entire mint 
     /// process is completed on the Nft contract
@@ -79,7 +80,7 @@ contract Collection is TIP4_1Collection, OwnableExternal {
     }
 
     function mintNft() external virtual {
-        require(msg.value > _remainOnNft + 0.1 ton, CollectionErrors.value_is_less_than_required);
+        require(msg.value > _remainOnNft + 0.1 ton, value_is_less_than_required);
         tvm.rawReserve(0, 4);
 
         uint256 id = uint256(_totalSupply);
@@ -107,9 +108,14 @@ contract Collection is TIP4_1Collection, OwnableExternal {
     
     }
 
-    function setRemainOnNft(uint128 remainOnNft) external virtual onlyOwner {
+    function setRemainOnNft(uint128 remainOnNft) external virtual {
+        require(TIP4_1Collection._isOwner(), sender_is_not_owner);
         _remainOnNft = remainOnNft;
     } 
+
+    function _isOwner() internal override onlyOwner returns(bool){
+        return true;
+    }
 
     function _buildNftState(
         TvmCell code,
@@ -129,11 +135,16 @@ contract Collection is TIP4_1Collection, OwnableExternal {
 
 # Build project
 
-1. Change ```locklift.config.js```
-   1. update paths for ``compiler``, ``linker`` 
-   1. Run: ``export TVM_LINKER_LIB_PATH=path to stdlib_sol.tvm``
-1. Change ```package.json``` file
-   1. add ``"build": "locklift build --config locklift.config.js"`` to ``scripts`` section
-1. Build contracts. Run ```npm run build```
+1. build ```Nft.sol``` file to use [TON Solidity Compiler](https://github.com/tonlabs/TON-Solidity-Compiler.git)
+   1. ```solc Nft.sol --include-path node_modules```
+1. build ```Collection.sol``` file to use [TON Solidity Compiler](https://github.com/tonlabs/TON-Solidity-Compiler.git)
+   1. ```solc Collection.sol --include-path node_modules```
+1. compile ```Nft.code``` file to use  [TVM linker](https://github.com/tonlabs/TVM-linker/releases/tag/0.14.2) 
+   1. ```tvm_linker compile --abi-json Nft.abi.json Nft.code --lib stdlib_sol.tvm```
+1. compile ```Collection.code``` file to use  [TVM linker](https://github.com/tonlabs/TVM-linker/releases/tag/0.14.2) 
+   1. ```tvm_linker compile --abi-json Collection.abi.json Collection.code --lib stdlib_sol.tvm```
 
-Build result in ``build`` folder.
+# Deploy NFT
+
+Deploy ```Collection.tvc`` use [ever-sdk](https://github.com/tonlabs/ever-sdk) or [cli](https://github.com/tonlabs/tonos-cli)
+

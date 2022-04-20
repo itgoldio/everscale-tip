@@ -2,6 +2,8 @@
 
 ## 1.0.0 (2022-04-15)
 
+TIP4_4 standard has been temporarily removed.
+
 ### Improvements
  * Remove `OwnableExternal`, add `_isOwner()`
 

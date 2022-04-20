@@ -146,5 +146,5 @@ contract Collection is TIP4_1Collection, OwnableExternal {
 
 # Deploy NFT
 
-Deploy ```Collection.tvc`` use [ever-sdk](https://github.com/tonlabs/ever-sdk) or [cli](https://github.com/tonlabs/tonos-cli)
+Deploy ```Collection.tvc``` use [ever-sdk](https://github.com/tonlabs/ever-sdk) or [cli](https://github.com/tonlabs/tonos-cli)
 

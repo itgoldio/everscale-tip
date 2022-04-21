@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 (2022-04-21)
+
+### Bugfixes
+* [TIP4_3] Recompile indexes
+
 ## 1.0.0 (2022-04-15)
 
 TIP4_4 standard has been temporarily removed.

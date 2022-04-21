@@ -140,9 +140,9 @@ contract Collection is TIP4_1Collection, OwnableExternal {
 1. build ```Collection.sol``` file to use [TON Solidity Compiler](https://github.com/tonlabs/TON-Solidity-Compiler.git)
    1. ```solc Collection.sol --include-path node_modules```
 1. compile ```Nft.code``` file to use  [TVM linker](https://github.com/tonlabs/TVM-linker/releases/tag/0.14.2) 
-   1. ```tvm_linker compile --abi-json Nft.abi.json Nft.code --lib stdlib_sol.tvm```
+   1. ```tvm_linker compile --abi-json Nft.abi.json Nft.code --lib stdlib_sol.tvm -o Nft.tvc```
 1. compile ```Collection.code``` file to use  [TVM linker](https://github.com/tonlabs/TVM-linker/releases/tag/0.14.2) 
-   1. ```tvm_linker compile --abi-json Collection.abi.json Collection.code --lib stdlib_sol.tvm```
+   1. ```tvm_linker compile --abi-json Collection.abi.json Collection.code --lib stdlib_sol.tvm -o Collection.tvc```
 
 # Deploy NFT
 

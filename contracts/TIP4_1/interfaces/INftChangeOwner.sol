@@ -1,5 +1,3 @@
-pragma ton-solidity >= 0.58.1;
-
 interface INftChangeOwner {
 
     struct CallbackParams {
@@ -9,12 +7,19 @@ interface INftChangeOwner {
 
     /// @notice change owner callback processing
     /// @param id Unique NFT id
-    /// @param oldOwner Address of nft owner before owner changed
-    /// @param oldManager Address of nft manager before manager changed
-    /// @param newOwner Address of new nft owner
-    /// @param newManager Address of new nft manager
+    /// @param manager Address of NFT manager
+    /// @param oldOwner Address of NFT owner before owner changed
+    /// @param newOwner Address of new NFT owner
     /// @param collection Address of collection smart contract, that mint the NFT
-    /// @param sendGasTo - Address to send remaining gas
-    //  @param payload - Custom payload
-    function onNftChangeOwner(uint256 id, address oldOwner, address oldManager, address newOwner,  address newManager, address collection, address sendGasTo, TvmCell payload) external;
+    /// @param sendGasTo Address to send remaining gas
+    /// @param payload Custom payload
+    function onNftChangeOwner(
+        uint256 id,
+        address manager,
+        address oldOwner,
+        address newOwner,
+        address collection,
+        address sendGasTo,
+        TvmCell payload
+    ) external;
 }

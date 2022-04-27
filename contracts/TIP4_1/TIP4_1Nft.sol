@@ -11,6 +11,7 @@ pragma AbiHeader pubkey;
 import './interfaces/ITIP4_1NFT.sol';
 import './interfaces/INftChangeOwner.sol';
 import './interfaces/INftChangeManager.sol';
+import './interfaces/INftTransfer.sol';
 
 import '../TIP6/TIP6.sol';
 
@@ -75,8 +76,55 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
 
         sendGasTo.transfer({value: 0, flag: 128 + 2});
     }
+
+    /// @notice Transfers ownership to another account (set new owner & manager)
+    /// @param to - the future owner of the token
+    /// @param sendGasTo - the address to which the remaining gas will be sent
+    /// @param callbacks - key (destination address for callback) => ..
+    /// .. value (CallbackParams structure ( CallbackParams { uint128 value; TvmCell payload; } ))
+    /// Can only be called from the manager's address
+    /// Requirements:
+    ///
+    /// - `to` can't be the zero address.
+    /// - `sendGasTo` can't be the zero address.
+    /// - `callbacks` can be the zero mapping.
+    /// - Callbacks(key) address must implement {INftTransfer-onNftTransfer}.
+    ///
+    /// Emits a {OwnerChanged} event if to != oldOwner && Emits a {ManagerChanged} event if to != oldManager.
+    function transfer(
+        address to, 
+        address sendGasTo, 
+        mapping(address => CallbackParams) callbacks
+    ) public virtual override onlyManager {
+        tvm.rawReserve(0, 4);
+
+        _beforeTransfer(to, sendGasTo, callbacks);
+
+        address oldOwner = _owner;
+        _changeOwner(to);
+        _changeManager(to);
+
+        _afterTransfer(to, sendGasTo, callbacks);
+
+        for ((address dest, CallbackParams p) : callbacks) {
+            INftTransfer(dest).onNftTransfer{
+                value: p.value,
+                flag: 0 + 1,
+                bounce: false
+            }(_id, oldOwner, to, _manager, to, _collection, sendGasTo, p.payload);
+        }
+
+        if (sendGasTo.value != 0) {
+            sendGasTo.transfer({
+                value: 0,
+                flag: 128 + 2,
+                bounce: false
+            });
+        }
+
+    }
      
-    /// @notice Transfers ownership to another account
+    /// @notice Change Nft owner
     /// @param newOwner - the future owner of the token
     /// @param sendGasTo - the address to which the remaining gas will be sent
     /// @param callbacks - key (destination address for callback) => ..
@@ -89,7 +137,7 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
     /// - `callbacks` can be the zero mapping.
     /// - Callbacks(key) address must implement {INftChangeOwner-onNftChangeOwner}.
     ///
-    /// Emits a {OwnerChanged} event.
+    /// Emits a {OwnerChanged} event if newOwner != oldOwner
     function changeOwner(
         address newOwner, 
         address sendGasTo, 
@@ -109,7 +157,7 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
                 value: p.value,
                 flag: 0 + 1,
                 bounce: false
-            }(_id, oldOwner, _manager, newOwner, _manager, _collection, sendGasTo, p.payload);
+            }(_id, _manager, oldOwner, newOwner, _collection, sendGasTo, p.payload);
         }
 
         if (sendGasTo.value != 0) {
@@ -127,8 +175,6 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
     ) internal {
         address oldOwner = _owner;
         _owner = newOwner;
-        _changeManager(newOwner);
-        
         if (oldOwner != newOwner) {
             emit OwnerChanged(oldOwner, newOwner);
         }
@@ -148,7 +194,7 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
     /// - `callbacks` can be the zero mapping.
     /// - Callbacks(key) address must implement {INftChangeManager-onNftChangeManager}.
     ///
-    /// Emits a {ManagerChanged} event.
+    /// Emits a {ManagerChanged} event if newManager != oldManager.
     function changeManager(
         address newManager, 
         address sendGasTo, 
@@ -213,33 +259,57 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
         );
     }
 
+    function _beforeTransfer(
+        address to, 
+        address sendGasTo, 
+        mapping(address => CallbackParams) callbacks
+    ) internal virtual {
+        to; sendGasTo; callbacks; //disable warnings
+    }
+
+    function _afterTransfer(
+        address to, 
+        address sendGasTo, 
+        mapping(address => CallbackParams) callbacks
+    ) internal virtual {
+        to; sendGasTo; callbacks; //disable warnings
+    }
+
     function _beforeChangeOwner(
         address oldOwner, 
         address newOwner,
         address sendGasTo, 
         mapping(address => CallbackParams) callbacks
-    ) internal virtual {}   
+    ) internal virtual {
+        oldOwner; newOwner; sendGasTo; callbacks; //disable warnings
+    }   
 
     function _afterChangeOwner(
         address oldOwner, 
         address newOwner,
         address sendGasTo, 
         mapping(address => CallbackParams) callbacks
-    ) internal virtual {}
+    ) internal virtual {
+        oldOwner; newOwner; sendGasTo; callbacks; //disable warnings
+    }
 
     function _beforeChangeManager(
         address oldManager, 
         address newManager,
         address sendGasTo, 
         mapping(address => CallbackParams) callbacks
-    ) internal virtual {}   
+    ) internal virtual {
+        oldManager; newManager; sendGasTo; callbacks; //disable warnings
+    }   
 
     function _afterChangeManager(
         address oldManager, 
         address newManager,
         address sendGasTo, 
         mapping(address => CallbackParams) callbacks
-    ) internal virtual {}
+    ) internal virtual {
+        oldManager; newManager; sendGasTo; callbacks; //disable warnings
+    }
 
     modifier onlyManager virtual {
         require(msg.sender == _manager, sender_is_not_manager);

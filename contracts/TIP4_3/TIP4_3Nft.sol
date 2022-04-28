@@ -40,6 +40,22 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         _deployIndex();
     }
 
+    function _beforeTransfer(
+        address to, 
+        address sendGasTo, 
+        mapping(address => CallbackParams) callbacks
+    ) internal virtual override {
+        _destructIndex(sendGasTo);
+    }
+
+    function _afterTransfer(
+        address to, 
+        address sendGasTo, 
+        mapping(address => CallbackParams) callbacks
+    ) internal virtual override {
+        _deployIndex();
+    }
+
     function _beforeChangeOwner(
         address oldOwner, 
         address newOwner,

@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.1 (2022-04-28)
+
+### Bugfixes
+* [TIP4_3] Redeploy Indexes for transfer func.
+
 ## 1.1.0 (2022-04-28)
 
 ### Improvements

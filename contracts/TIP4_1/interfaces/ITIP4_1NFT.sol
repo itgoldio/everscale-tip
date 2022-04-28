@@ -55,4 +55,13 @@ interface ITIP4_1NFT {
     /// @param sendGasTo - Address to send remaining gas
     /// @param callbacks - Callbacks array to send by addresses. It can be empty.
     function changeManager(address newManager, address sendGasTo, mapping(address => CallbackParams)  callbacks) external;
+
+    /// @notice Change NFT owner and manager
+    /// @dev Invoked from manager address only
+    /// @dev Emit OwnerChanged
+    /// @dev Emit ManagerChanged
+    /// @param to - New NFT owner and manager
+    /// @param sendGasTo Address to send remaining gas
+    /// @param callbacks Callbacks array to send by addresses. It can be empty
+    function transfer(address to, address sendGasTo, mapping(address => CallbackParams) callbacks) external;
 }

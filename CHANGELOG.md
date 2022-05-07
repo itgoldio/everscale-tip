@@ -8,6 +8,16 @@
 ### Deprecated: 
 * Remove `buildIndexCode` and `buildIndexState` from Collection
 
+## 1.1.1 (2022-04-28)
+
+### Bugfixes
+* [TIP4_3] Redeploy Indexes for transfer func.
+
+## 1.1.0 (2022-04-28)
+
+### Improvements
+* [TIP4_1] Add: ```function transfer(address to, address sendGasTo, mapping(address => CallbackParams) callbacks) external``` to Nft
+
 ## 1.0.1 (2022-04-21)
 
 ### Bugfixes

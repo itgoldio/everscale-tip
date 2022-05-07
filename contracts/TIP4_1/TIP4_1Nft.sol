@@ -69,7 +69,8 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
         _supportedInterfaces[
             bytes4(tvm.functionId(ITIP4_1NFT.getInfo)) ^
             bytes4(tvm.functionId(ITIP4_1NFT.changeOwner)) ^
-            bytes4(tvm.functionId(ITIP4_1NFT.changeManager))
+            bytes4(tvm.functionId(ITIP4_1NFT.changeManager)) ^ 
+            bytes4(tvm.functionId(ITIP4_1NFT.transfer))
         ] = true;
 
         emit NftCreated(_id, _owner, _manager, _collection);

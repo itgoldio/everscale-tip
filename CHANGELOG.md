@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.2 (2022-05-07)
+
+### Bugfixes
+* [TIP4_3] Add transfer to TIP6 ITIP4_1NFT selector
+
+### Deprecated: 
+* Remove `buildIndexCode` and `buildIndexState` from Collection
+
 ## 1.0.1 (2022-04-21)
 
 ### Bugfixes

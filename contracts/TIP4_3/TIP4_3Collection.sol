@@ -29,9 +29,9 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection {
     TvmCell _codeIndexBasis;
 
     /// Values for deploy/destroy
-    uint128 _indexDeployValue = 0.4 ton;
+    uint128 _indexDeployValue = 0.15 ton;
     uint128 _indexDestroyValue = 0.1 ton;
-    uint128 _deployIndexBasisValue = 0.4 ton;
+    uint128 _deployIndexBasisValue = 0.15 ton;
 
     constructor(
         TvmCell codeIndex,
@@ -121,36 +121,6 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection {
     /// @return hash - calculated hash based on the Index code
     function indexCodeHash() external view override responsible returns (uint256 hash) {
         return {value: 0, flag: 64, bounce: false} tvm.hash(_codeIndex);
-    }
-
-    /// @notice build Index code used TvmCell index code & salt (string stamp, address collection, address owner)
-    /// @return TvmCell indexBasisCode 
-    /// about salt read more here (https://github.com/tonlabs/TON-Solidity-Compiler/blob/master/API.md#tvmcodesalt)
-    function _buildIndexCode(
-        address collection,
-        address owner
-    ) internal virtual view returns (TvmCell) {
-        TvmBuilder salt;
-        salt.store("nft");
-        salt.store(collection);
-        salt.store(owner);
-        return tvm.setCodeSalt(_codeIndex, salt.toCell());
-    }
-
-    /// @notice Generates a StateInit from code and data
-    /// @param code TvmCell code - generated via the _buildIndexCode method
-    /// @param nft address of Nft contract
-    /// @return TvmCell object - stateInit
-    /// about tvm.buildStateInit read more here (https://github.com/tonlabs/TON-Solidity-Compiler/blob/master/API.md#tvmbuildstateinit)
-    function _buildIndexState(
-        TvmCell code,
-        address nft
-    ) internal virtual pure returns (TvmCell) {
-        return tvm.buildStateInit({
-            contr: Index,
-            varInit: {_nft: nft},
-            code: code
-        });
     }
 
     /// Overrides standard method, because Nft contract is changed

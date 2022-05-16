@@ -69,7 +69,8 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
         _supportedInterfaces[
             bytes4(tvm.functionId(ITIP4_1NFT.getInfo)) ^
             bytes4(tvm.functionId(ITIP4_1NFT.changeOwner)) ^
-            bytes4(tvm.functionId(ITIP4_1NFT.changeManager))
+            bytes4(tvm.functionId(ITIP4_1NFT.changeManager)) ^ 
+            bytes4(tvm.functionId(ITIP4_1NFT.transfer))
         ] = true;
 
         emit NftCreated(_id, _owner, _manager, _collection);
@@ -213,7 +214,7 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
             INftChangeManager(dest).onNftChangeManager{
                 value: p.value,
                 flag: 0 + 1,
-                bounce: false
+                bounce: true
             }(_id, _owner, oldManager, newManager, _collection, sendGasTo, p.payload);
         }
 
@@ -314,5 +315,18 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
     modifier onlyManager virtual {
         require(msg.sender == _manager, sender_is_not_manager);
         _;
+    }
+
+    onBounce(TvmSlice body) external {
+        tvm.rawReserve(0, 4);
+
+        uint32 functionId = body.decode(uint32);
+
+        if (functionId == tvm.functionId(INftChangeManager.onNftChangeManager)) {
+            if (msg.sender == _manager) {
+                _manager = _owner;
+            }
+            _owner.transfer({value: 0, flag: 128});
+        }
     }
 }

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.2 (2022-05-16)
+
+### Improvements
+* [TIP4_1] Override ```onBounce``` for safer operation of the ```changeManager``` method to Nft
+* [TIP4_3] The index deployment constants have been changed (```_indexDeployValue``` 0.4 ever => 0.15 ever, ```_deployIndexBasisValue``` 0.4 ever => 0.15 ever)
+
+### Bugfixes
+* [TIP4_3] Add transfer to TIP6 ITIP4_1NFT selector
+
+### Deprecated: 
+* Remove `buildIndexCode` and `buildIndexState` from Collection
+
 ## 1.1.1 (2022-04-28)
 
 ### Bugfixes

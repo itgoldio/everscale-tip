@@ -29,9 +29,9 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection {
     TvmCell _codeIndexBasis;
 
     /// Values for deploy/destroy
-    uint128 _indexDeployValue = 0.4 ton;
+    uint128 _indexDeployValue = 0.15 ton;
     uint128 _indexDestroyValue = 0.1 ton;
-    uint128 _deployIndexBasisValue = 0.4 ton;
+    uint128 _deployIndexBasisValue = 0.15 ton;
 
     constructor(
         TvmCell codeIndex,

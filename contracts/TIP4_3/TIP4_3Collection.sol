@@ -53,7 +53,6 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection {
         ] = true;
 
         _deployIndexBasis();
-
     }
 
     /// _codeIndexBasis can't be empty

@@ -33,7 +33,7 @@ abstract contract TIP4_2Collection is TIP4_1Collection, ITIP4_2JSON_Metadata {
     }
 
     /// See interfaces/ITIP4_2JSON_Metadata.sol
-    function getJson() external view override responsible returns (string json) {
+    function getJson() external virtual view override responsible returns (string json) {
         return {value: 0, flag: 64, bounce: false} (_json);
     }
 

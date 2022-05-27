@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.1.3 (2022-05-27)
+
+### Improvements
+* [TIP4_2] ```getJson``` is now ```virual```
+
 ## 1.1.2 (2022-05-16)
 
 ### Improvements

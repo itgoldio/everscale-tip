@@ -1,6 +1,6 @@
 /// We recommend using the compiler version 0.58.1. 
 /// You can use other versions, but we do not guarantee compatibility of the compiler version.
-pragma ton-solidity = 0.58.1;
+pragma ton-solidity >= 0.58.1;
 
 pragma AbiHeader expire;
 pragma AbiHeader time;

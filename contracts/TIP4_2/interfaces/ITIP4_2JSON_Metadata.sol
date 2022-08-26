@@ -1,4 +1,4 @@
-pragma ton-solidity >= 0.58.0;
+pragma ton-solidity >= 0.58.1;
 
 interface ITIP4_2JSON_Metadata {
 

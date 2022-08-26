@@ -6,7 +6,7 @@ declare global {
   const locklift: import("locklift").Locklift<FactorySource>;
 }
 
-const LOCAL_NETWORK_ENDPOINT = "http://188.227.35.77/";
+const LOCAL_NETWORK_ENDPOINT = "http://localhost/graphql";
 const RFLD_ENDPOINT = "https://rfld-dapp.itgold.io/graphql";
 
 const config: LockliftConfig = {

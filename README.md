@@ -13,6 +13,9 @@
 1. Init npm project. ```npm init -y```
 1. Install itgold library for development NFT. ```npm i @itgold/everscale-tip```
 
+# How to run tests
+```npm run test```
+
 # How to use library
 
 1. Create ```Nft.sol``` file and fill it.

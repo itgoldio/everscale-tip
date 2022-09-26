@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.1.4 (2022-08-17)
+
+### Improvements
+* A new version of the compiler is installed `ton-solidity >= 0.58.1` (old: `ton-solidity = 0.58.1`)
+
+### Bugfixes
+* `access/OwnableExternal.sol` The `owner` method explicitly states `bounce: false` 
+
 ## 1.1.3 (2022-05-27)
 
 ### Improvements

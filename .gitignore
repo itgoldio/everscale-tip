@@ -3,5 +3,7 @@
 # Dependency directory
 node_modules
 
+.prettierrc
+
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -1,4 +1,4 @@
-pragma ton-solidity = 0.58.1;
+pragma ton-solidity >= 0.58.1;
 
 interface ITIP6 {
     /// @notice Query if a contract implements an interface

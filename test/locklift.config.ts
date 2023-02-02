@@ -1,6 +1,6 @@
 import { LockliftConfig } from "locklift";
 import { FactorySource } from "./build/factorySource";
-import { SimpleGiver, GiverWallet } from "./giverSettings";
+import { SimpleGiver, GiverWalletV2_3 } from "./giverSettings";
 
 declare global {
   const locklift: import("locklift").Locklift<FactorySource>;
@@ -50,9 +50,9 @@ const config: LockliftConfig = {
         },
       },
       giver: {
-        giverFactory: (ever, keyPair, address) => new GiverWallet(ever, keyPair, address),
-        address: "0:3e0dffb41dd61c048cb322cfd43c21d9fc93b7596259d43cc3ac122539cbf4eb",
-        key: "e237e6aff07ee21b7023f715b2c130d988631577454ec06908a2e5b78aad4d86",
+        giverFactory: (ever, keyPair, address) => new GiverWalletV2_3(ever, keyPair, address),
+        address: "0:f2169a6b1f1b42e8b8dfb45d3d459eedbd15d601b701fd7f9e2992beae43736a",
+        key: "1cf6b8f2148058f70a3916768beb46e4f3d3a60597bef88181a544bc7cf00bcd",
       },
       tracing: {
         endpoint: RFLD_ENDPOINT,

@@ -1,45 +1,27 @@
 import { Address, Contract, Giver, ProviderRpcClient, Transaction } from "locklift";
 import { Ed25519KeyPair } from "everscale-standalone-client";
 
+// Reimplements this class if you need to use custom giver contract
 export class SimpleGiver implements Giver {
-    public giverContract: Contract<typeof simpleGiverAbi>;
-  
-    constructor(ever: ProviderRpcClient, readonly keyPair: Ed25519KeyPair, address: string) {
-      const giverAddr = new Address(address);
-      this.giverContract = new ever.Contract(simpleGiverAbi, giverAddr);
-    }
-  
-    public async sendTo(sendTo: Address, value: string): Promise<{ transaction: Transaction; output?: {} }> {
-      return this.giverContract.methods
-        .sendTransaction({
-          value: value,
-          dest: sendTo,
-          bounce: false,
-        })
-        .sendExternal({ publicKey: this.keyPair.publicKey });
-    }
-  }
-  
-
-export class GiverWallet implements Giver {
-  public giverContract: Contract<typeof giverWalletAbi>;
+  public giverContract: Contract<typeof giverAbi>;
 
   constructor(ever: ProviderRpcClient, readonly keyPair: Ed25519KeyPair, address: string) {
     const giverAddr = new Address(address);
-    this.giverContract = new ever.Contract(giverWalletAbi, giverAddr);
+    this.giverContract = new ever.Contract(giverAbi, giverAddr);
   }
 
   public async sendTo(sendTo: Address, value: string): Promise<{ transaction: Transaction; output?: {} }> {
     return this.giverContract.methods
-      .sendGrams({
+      .sendTransaction({
+        value: value,
         dest: sendTo,
-        amount: value,
+        bounce: false,
       })
       .sendExternal({ publicKey: this.keyPair.publicKey });
   }
 }
 
-const simpleGiverAbi = {
+const giverAbi = {
   "ABI version": 2,
   header: ["time", "expire"],
   functions: [
@@ -80,66 +62,83 @@ const simpleGiverAbi = {
   events: [],
 } as const;
 
-const giverWalletAbi = { 
-  "ABI version":2,
-  "version":"2.2",
-  "header":["pubkey","time","expire"],
-  "functions":  [
+export class GiverWallet implements Giver {
+  public giverContract: Contract<typeof giverWallet>;
+
+  constructor(ever: ProviderRpcClient, readonly keyPair: Ed25519KeyPair, address: string) {
+    const giverAddr = new Address(address);
+    this.giverContract = new ever.Contract(giverWallet, giverAddr);
+  }
+
+  public async sendTo(sendTo: Address, value: string): Promise<{ transaction: Transaction; output?: {} }> {
+    return this.giverContract.methods
+      .sendTransaction({
+        value: value,
+        dest: sendTo,
+        bounce: false,
+        flags: 3,
+        payload: "",
+      })
+      .sendExternal({ publicKey: this.keyPair.publicKey });
+  }
+}
+
+const giverWallet = {
+  "ABI version": 2,
+  header: ["pubkey", "time", "expire"],
+  functions: [
     {
-      "name":"constructor",
-      "inputs": [
-        { "name":"_owner","type":"uint256"}
+      name: "sendTransaction",
+      inputs: [
+        { name: "dest", type: "address" },
+        { name: "value", type: "uint128" },
+        { name: "bounce", type: "bool" },
+        { name: "flags", type: "uint8" },
+        { name: "payload", type: "cell" },
       ],
-      "outputs":[]
+      outputs: [],
     },
+  ],
+  events: [],
+} as const;
+
+export class GiverWalletV2_3 implements Giver {
+  public giverContract: Contract<typeof broxusEverWallet>;
+
+  constructor(ever: ProviderRpcClient, readonly keyPair: Ed25519KeyPair, address: string) {
+    const giverAddr = new Address(address);
+    this.giverContract = new ever.Contract(broxusEverWallet, giverAddr);
+  }
+
+  public async sendTo(sendTo: Address, value: string): Promise<{ transaction: Transaction; output?: {} }> {
+    return this.giverContract.methods
+      .sendTransaction({
+        value: value,
+        dest: sendTo,
+        bounce: false,
+        flags: 3,
+        payload: "",
+      })
+      .sendExternal({ publicKey: this.keyPair.publicKey });
+  }
+}
+
+const broxusEverWallet = {
+  "ABI version": 2,
+  version: "2.3",
+  header: ["pubkey", "time", "expire"],
+  functions: [
     {
-      "name":"sendGrams",
-      "inputs": [
-        { "name":"dest","type":"address"},
-        { "name":"amount","type":"uint64"}
+      name: "sendTransaction",
+      inputs: [
+        { name: "dest", type: "address" },
+        { name: "value", type: "uint128" },
+        { name: "bounce", type: "bool" },
+        { name: "flags", type: "uint8" },
+        { name: "payload", type: "cell" },
       ],
-      "outputs":[]
+      outputs: [],
     },
-    {
-      "name":"transferOwnership",
-      "inputs": [
-        { "name":"newOwner","type":"uint256"}
-      ],
-      "outputs":[]
-    },
-    {
-      "name":"owner",
-      "inputs":[],
-      "outputs": [
-        {"name":"owner","type":"uint256"}
-      ]
-    },
-    {
-      "name":"_randomNonce",
-      "inputs":[],
-      "outputs": [
-        { "name":"_randomNonce","type":"uint256"}
-      ]
-    }
   ],
-  "data": [
-    {"key":1,"name":"_randomNonce","type":"uint256"}
-  ],
-  "events": [
-    {
-      "name":"OwnershipTransferred",
-      "inputs": [
-        {"name":"previousOwner","type":"uint256"},
-        {"name":"newOwner","type":"uint256"}
-      ],
-      "outputs":[]
-    }
-  ],
-  "fields": [
-    {"name":"_pubkey","type":"uint256"},
-    {"name":"_timestamp","type":"uint64"},
-    {"name":"_constructorFlag","type":"bool"},
-    {"name":"owner","type":"uint256"},
-    {"name":"_randomNonce","type":"uint256"}
-  ],
+  events: [],
 } as const;

@@ -18,7 +18,9 @@ import './TIP4_1Nft.sol';
 /// For detect what interfaces a smart contract implements used TIP-6.1 standard. ...
 /// ... Read more here (https://github.com/nftalliance/docs/blob/main/src/Standard/TIP-6/1.md)
 contract TIP4_1Collection is ITIP4_1Collection, TIP6 {
-    
+
+    uint8 constant wrong_pubkey = 101;
+        
     /// Code of the TIP4_1Nft conract or of the custom Nft contract based on the TIP4_1Nft
     TvmCell _codeNft;
 
@@ -26,6 +28,7 @@ contract TIP4_1Collection is ITIP4_1Collection, TIP6 {
     uint128 _totalSupply;
 
     constructor(TvmCell codeNft) public {
+        require(msg.pubkey() == tvm.pubkey(), wrong_pubkey);
         tvm.accept();
 
         _codeNft = codeNft;

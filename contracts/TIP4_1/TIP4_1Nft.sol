@@ -317,7 +317,7 @@ contract TIP4_1Nft is ITIP4_1NFT, TIP6 {
         _;
     }
 
-    onBounce(TvmSlice body) external {
+    onBounce(TvmSlice body) external virtual {
         tvm.rawReserve(0, 4);
 
         uint32 functionId = body.decode(uint32);

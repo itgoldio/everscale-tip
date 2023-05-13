@@ -18,17 +18,17 @@
 
 # How to use library
 
-1. Create ```Nft.sol``` file and fill it.
+1. Create ```Nft.tsol``` file and fill it.
 
 ```solidity
-pragma ton-solidity = 0.58.1;
+pragma ton-solidity = 0.62.0;
 
 pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
 
-import '@itgold/everscale-tip/contracts/TIP4_1/TIP4_1Nft.sol';
+import '@itgold/everscale-tip/contracts/TIP4_1/TIP4_1Nft.tsol';
 
 contract Nft is TIP4_1Nft {
 
@@ -45,19 +45,19 @@ contract Nft is TIP4_1Nft {
 }
 ```
 
-2. Create ```Collection.sol``` file and fill it.
+2. Create ```Collection.tsol``` file and fill it.
 
 ```solidity
-pragma ton-solidity = 0.58.1;
+pragma ton-solidity = 0.62.0;
 
 pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
 
-import '@itgold/everscale-tip/contracts/TIP4_1/TIP4_1Collection.sol';
-import '@itgold/everscale-tip/contracts/access/OwnableExternal.sol';
-import './Nft.sol';
+import '@itgold/everscale-tip/contracts/TIP4_1/TIP4_1Collection.tsol';
+import '@itgold/everscale-tip/contracts/access/OwnableExternal.tsol';
+import './Nft.tsol';
 
 contract Collection is TIP4_1Collection, OwnableExternal {
 
@@ -138,10 +138,10 @@ contract Collection is TIP4_1Collection, OwnableExternal {
 
 # Build project
 
-1. build ```Nft.sol``` file to use [TON Solidity Compiler](https://github.com/tonlabs/TON-Solidity-Compiler.git)
-   1. ```solc Nft.sol --include-path node_modules```
-1. build ```Collection.sol``` file to use [TON Solidity Compiler](https://github.com/tonlabs/TON-Solidity-Compiler.git)
-   1. ```solc Collection.sol --include-path node_modules```
+1. build ```Nft.tsol``` file to use [TON Solidity Compiler](https://github.com/tonlabs/TON-Solidity-Compiler.git)
+   1. ```solc Nft.tsol --include-path node_modules```
+1. build ```Collection.tsol``` file to use [TON Solidity Compiler](https://github.com/tonlabs/TON-Solidity-Compiler.git)
+   1. ```solc Collection.tsol --include-path node_modules```
 1. compile ```Nft.code``` file to use  [TVM linker](https://github.com/tonlabs/TVM-linker/releases/tag/0.14.2) 
    1. ```tvm_linker compile --abi-json Nft.abi.json Nft.code --lib stdlib_sol.tvm -o Nft.tvc```
 1. compile ```Collection.code``` file to use  [TVM linker](https://github.com/tonlabs/TVM-linker/releases/tag/0.14.2) 

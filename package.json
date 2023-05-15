@@ -1,6 +1,6 @@
 {
   "name": "tip4",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "TIP-4 NFT Smart Contracts for TVM-compatible networks",
   "files": [
     "/contracts/**"
@@ -25,7 +25,7 @@
     "everscale",
     "smart",
     "contracts",
-    "nft",
+    "nft"
   ],
   "devDependencies": {
     "@types/chai": "^4.3.4",

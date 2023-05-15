@@ -5,8 +5,8 @@ pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
 
-import "../../../contracts/TIP4_3/TIP4_3Collection.sol";
-import './TIP4_3NftCon.sol';
+import "../../../contracts/TIP4_3/TIP4_3Collection.tsol";
+import './TIP4_3NftCon.tsol';
 
 
 contract Collection is TIP4_3Collection {
@@ -38,7 +38,7 @@ contract Collection is TIP4_3Collection {
 
         TvmCell codeNft = _buildNftCode(address(this));
         TvmCell stateNft = _buildNftState(codeNft, uint256(id));
-        address nftAddr = new TIP4_3NftCon{
+        new TIP4_3NftCon{
             stateInit: stateNft,
             value: 0.7 ever,
             flag: 1

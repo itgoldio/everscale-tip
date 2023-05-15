@@ -3,7 +3,7 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 
-import "../../../contracts/TIP6/TIP6.sol";
+import "../../../contracts/TIP6/TIP6.tsol";
 
 
 contract TIP6Con is TIP6 {

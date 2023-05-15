@@ -8,12 +8,12 @@ pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
 
-import './interfaces/ITIP4_1NFT.sol';
-import './interfaces/INftChangeOwner.sol';
-import './interfaces/INftChangeManager.sol';
-import './interfaces/INftTransfer.sol';
+import './interfaces/ITIP4_1NFT.tsol';
+import './interfaces/INftChangeOwner.tsol';
+import './interfaces/INftChangeManager.tsol';
+import './interfaces/INftTransfer.tsol';
 
-import '../TIP6/TIP6.sol';
+import '../TIP6/TIP6.tsol';
 
 
 /// @title One of the required contracts of an TIP4-1(Non-Fungible Token Standard) compliant technology.

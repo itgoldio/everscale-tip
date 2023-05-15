@@ -3,7 +3,7 @@ pragma AbiHeader expire;
 pragma AbiHeader pubkey;
 
 
-import "../../../contracts/access/OwnableInternal.sol";
+import "../../../contracts/access/OwnableInternal.tsol";
 
 
 contract OwnableInternalContract is OwnableInternal {

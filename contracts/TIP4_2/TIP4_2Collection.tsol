@@ -7,9 +7,9 @@ pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
 
-import '../TIP4_1/TIP4_1Collection.sol';
-import './interfaces/ITIP4_2JSON_Metadata.sol';
-import './TIP4_2Nft.sol';
+import '../TIP4_1/TIP4_1Collection.tsol';
+import './interfaces/ITIP4_2JSON_Metadata.tsol';
+import './TIP4_2Nft.tsol';
 
 
 /// This contract implement TIP4_1Collection and ITIP4_2JSON_Metadata (add JSON Metadata)

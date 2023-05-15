@@ -7,11 +7,11 @@ pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
 
-import '../TIP4_1/TIP4_1Collection.sol';
-import './interfaces/ITIP4_3Collection.sol';
-import './TIP4_3Nft.sol';
-import './Index.sol';
-import './IndexBasis.sol';
+import '../TIP4_1/TIP4_1Collection.tsol';
+import './interfaces/ITIP4_3Collection.tsol';
+import './TIP4_3Nft.tsol';
+import './Index.tsol';
+import './IndexBasis.tsol';
 
 
 /// This contract implement TIP4_1Collection, ITIP4_3Collection (add indexes)
@@ -64,7 +64,7 @@ abstract contract TIP4_3Collection is TIP4_1Collection, ITIP4_3Collection {
 
         TvmCell code = _buildIndexBasisCode();
         TvmCell state = _buildIndexBasisState(code, address(this));
-        address indexBasis = new IndexBasis{stateInit: state, value: _deployIndexBasisValue}();
+        new IndexBasis{stateInit: state, value: _deployIndexBasisValue}();
     }
 
     /// @return code - code of IndexBasis contract

@@ -1,20 +1,22 @@
-pragma ton-solidity >= 0.58.1;
+pragma ever-solidity >= 0.62.0;
 
 pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
 
-import "../../../contracts/TIP4_1/TIP4_1Nft.sol";
-import "../../../contracts/TIP4_3/TIP4_3Nft.sol";
+import './TIP4_1/TIP4_1Nft.tsol';
+import './TIP4_2/TIP4_2Nft.tsol';
+import './TIP4_3/TIP4_3Nft.tsol';
 
 
-contract TIP4_3NftCon is TIP4_1Nft, TIP4_3Nft {
+contract NftBase is TIP4_1Nft, TIP4_2Nft, TIP4_3Nft {
 
     constructor(
         address owner,
         address sendGasTo,
         uint128 remainOnNft,
+        string json,
         uint128 indexDeployValue,
         uint128 indexDestroyValue,
         TvmCell codeIndex
@@ -22,6 +24,8 @@ contract TIP4_3NftCon is TIP4_1Nft, TIP4_3Nft {
         owner,
         sendGasTo,
         remainOnNft
+    ) TIP4_2Nft (
+        json
     ) TIP4_3Nft (
         indexDeployValue,
         indexDestroyValue,
@@ -45,7 +49,6 @@ contract TIP4_3NftCon is TIP4_1Nft, TIP4_3Nft {
     ) internal virtual override(TIP4_1Nft, TIP4_3Nft) {
         TIP4_3Nft._afterTransfer(to, sendGasTo, callbacks);
     }   
-
 
     function _beforeChangeOwner(
         address oldOwner, 

@@ -5,44 +5,35 @@ pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
 
-import "../../../contracts/TIP4_2/TIP4_2Collection.sol";
-import "./TIP4_2NftCon.sol";
+import "../../../contracts/TIP4_1/TIP4_1Collection.tsol";
+import "./TIP4_1NftCon.tsol";
 
 
-contract Collection is TIP4_2Collection {
-
-    constructor(
-        TvmCell codeNft, 
-        string json
-    ) TIP4_1Collection (
-        codeNft
-    ) TIP4_2Collection (
-        json
-    ) public {
+contract TIP4_1CollectionCon is TIP4_1Collection {
+    
+    constructor(TvmCell codeNft) TIP4_1Collection(codeNft) public {
         tvm.accept();
     }
 
     function mintNft(
         uint128 id,
-        address owner,
-        string json
-    ) external virtual {
+        address owner
+    ) external returns(address nftAddr) {
         tvm.accept();
-
-        _totalSupply++;
 
         TvmCell codeNft = _buildNftCode(address(this));
         TvmCell stateNft = _buildNftState(codeNft, uint256(id));
-        address nftAddr = new TIP4_2NftCon{
+        nftAddr = new TIP4_1NftCon{
             stateInit: stateNft,
-            value: 0.2 ever,
+            value: 0.5 ever,
             flag: 1
         }(
             owner,
             address(this),
-            0.1 ever,
-            json
+            0.3 ever
         ); 
+
+        _totalSupply++;
     }
 
     function nftCodeWithoutSalt() external view responsible returns (TvmCell nftCode) {
@@ -54,10 +45,9 @@ contract Collection is TIP4_2Collection {
         uint256 id
     ) internal virtual override pure returns (TvmCell) {
         return tvm.buildStateInit({
-            contr: TIP4_2NftCon,
+            contr: TIP4_1NftCon,
             varInit: {_id: id},
             code: code
         });
     }
-
 }

@@ -12,7 +12,7 @@ abstract contract OwnableInternal {
         _transferOwnership(owner);
     }
 
-    function owner() public view virtual returns (address owner) {
+    function owner() public view virtual returns (address owner_) {
         return _owner;
     }
 

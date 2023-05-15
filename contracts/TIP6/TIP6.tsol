@@ -4,7 +4,7 @@ pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
-import './ITIP6.sol';
+import './ITIP6.tsol';
 
 abstract contract TIP6 is ITIP6 {
 

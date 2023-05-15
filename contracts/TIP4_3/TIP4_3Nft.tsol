@@ -7,9 +7,9 @@ pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
 
-import '../TIP4_1/TIP4_1Nft.sol';
-import './interfaces/ITIP4_3NFT.sol';
-import './Index.sol';
+import '../TIP4_1/TIP4_1Nft.tsol';
+import './interfaces/ITIP4_3NFT.tsol';
+import './Index.tsol';
 
 
 /// This contract implement TIP4_1Collection, ITIP4_3NFT (add indexes)
@@ -46,6 +46,7 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         mapping(address => CallbackParams) callbacks
     ) internal virtual override {
         _destructIndex(sendGasTo);
+        to; callbacks;
     }
 
     function _afterTransfer(
@@ -53,6 +54,7 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         address sendGasTo, 
         mapping(address => CallbackParams) callbacks
     ) internal virtual override {
+        to; sendGasTo; callbacks;
         _deployIndex();
     }
 
@@ -63,6 +65,7 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         mapping(address => CallbackParams) callbacks
     ) internal virtual override {
         _destructIndex(sendGasTo);
+        oldOwner; newOwner; callbacks;
     }   
 
     function _afterChangeOwner(
@@ -71,6 +74,7 @@ abstract contract TIP4_3Nft is TIP4_1Nft, ITIP4_3NFT {
         address sendGasTo, 
         mapping(address => CallbackParams) callbacks
     ) internal virtual override {
+        oldOwner; newOwner; sendGasTo; callbacks;
         _deployIndex();
     }
 

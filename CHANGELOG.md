@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.1.6 (2023-05-15)
+
+### Improvements
+* Updated to newer compiler version 0.62.0
+* Added `CollectionBase` and `NftBase` implementations to inherit from
+
 ## 1.1.4 (2022-08-17)
 
 ### Improvements

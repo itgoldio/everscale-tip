@@ -91,7 +91,7 @@ describe("Test Ownable internal contract", async function () {
       );
 
       const response = await ownableInternal.methods.owner().call();
-      expect(response.owner.toString()).to.be.equal(owner.address.toString());
+      expect(response.owner_.toString()).to.be.equal(owner.address.toString());
 
       const pastEvents = await ownableInternal.getPastEvents({ filter: event => event.event === "OwnershipTransferred" });
       expect(pastEvents.events.length).to.be.equal(1);
@@ -99,7 +99,7 @@ describe("Test Ownable internal contract", async function () {
 
     it("Get owner test", async function () {
       const response = await ownableInternal.methods.owner({}).call();
-      expect(response.owner.toString()).to.be.equal(owner.address.toString());
+      expect(response.owner_.toString()).to.be.equal(owner.address.toString());
     });
 
     it("Transfer ownership test with zero new owner address", async function () {
@@ -126,7 +126,7 @@ describe("Test Ownable internal contract", async function () {
       );
 
       const response = await ownableInternal.methods.owner().call();
-      expect(response.owner.toString()).to.be.equal(owner.address.toString());
+      expect(response.owner_.toString()).to.be.equal(owner.address.toString());
 
       const pastEvents = await ownableInternal.getPastEvents({ filter: event => event.event === "OwnershipTransferred" });
       expect(pastEvents.events.length).to.be.equal(1);
@@ -154,7 +154,7 @@ describe("Test Ownable internal contract", async function () {
       );
 
       const response = await ownableInternal.methods.owner({}).call();
-      expect(response.owner.toString()).to.be.equal(newOwner.address.toString());
+      expect(response.owner_.toString()).to.be.equal(newOwner.address.toString());
 
       const pastEvents = await ownableInternal.getPastEvents({ filter: event => event.event === "OwnershipTransferred" });
       expect(pastEvents.events.length).to.be.equal(2);

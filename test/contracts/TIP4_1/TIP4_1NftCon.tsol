@@ -4,7 +4,7 @@ pragma AbiHeader expire;
 pragma AbiHeader time;
 pragma AbiHeader pubkey;
 
-import "../../../contracts/TIP4_1/TIP4_1Nft.sol";
+import "../../../contracts/TIP4_1/TIP4_1Nft.tsol";
 
 contract TIP4_1NftCon is TIP4_1Nft {
 

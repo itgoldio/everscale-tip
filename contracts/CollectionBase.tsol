@@ -39,9 +39,9 @@ contract CollectionBase is TIP4_2Collection, TIP4_3Collection {
         tvm.accept();
     }
 
-    function mintNft(
+    function _mintNft(
         string json
-    ) external {
+    ) internal {
         require(msg.value > _remainOnNft + (2 * _indexDeployValue), value_is_less_than_required);
         /// reserve original_balance
         tvm.rawReserve(0, 4);

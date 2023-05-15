@@ -1,6 +1,6 @@
 {
   "name": "tip4",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "TIP-4 NFT Smart Contracts for TVM-compatible networks",
   "files": [
     "/contracts/**"

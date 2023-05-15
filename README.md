@@ -9,7 +9,7 @@
 # Initialize project
 
 1. Create empty folder and move to it
-2. Init locklift project. ```locklift init -y```
+2. Init locklift project. ```locklift init```
 3. Install library for NFT. ```npm i tip4```
 4. Add NFT contracts to `externalContracts` and `precompiled` sections of your `locklift.config.ts`
 

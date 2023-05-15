@@ -10,7 +10,7 @@ import './TIP4_3/TIP4_3Collection.tsol';
 import './NftBase.tsol';
 
 
-contract Collection is TIP4_2Collection, TIP4_3Collection {
+contract CollectionBase is TIP4_2Collection, TIP4_3Collection {
 
     /**
     * Errors

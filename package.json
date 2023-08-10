@@ -25,7 +25,8 @@
     "contracts",
     "security",
     "nft",
-    "ITgold"
+    "ITgold",
+    "venom"
   ],
   "devDependencies": {
     "@types/chai": "^4.3.3",

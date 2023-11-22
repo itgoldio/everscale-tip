@@ -30,5 +30,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
+
+      - name: Install Docker
+        uses: docker/setup-buildx-action@v1
+
+      - name: Start local-node container
+        run: |
+          docker run -d --name local-node -e USER_AGREEMENT=yes -p 80:80 tonlabs/local-node
+
       - run: npm ci
       - run: npm run test

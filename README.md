@@ -7,7 +7,7 @@
 - Install [TVM linker](https://github.com/tonlabs/TVM-linker/releases/tag/0.14.2)
 - Install [nmp](https://www.npmjs.com/)
 
-# Initialize project
+# Initialize project 
 
 1. Create empty folder and move to it
 1. Init npm project. ```npm init -y```

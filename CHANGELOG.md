@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.2.0 (2023-08-11)
+
+### Improvements
+* Add keyword "virtual" to onBounce method
+* Added external signature verification
+
 ## 1.1.4 (2022-08-17)
 
 ### Improvements

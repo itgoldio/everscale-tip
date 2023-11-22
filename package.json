@@ -6,7 +6,7 @@
     "/contracts/**"
   ],
   "scripts": {
-    "test": "cd test && npx locklift test --network rfld"
+    "test": "cd test && npx locklift test --network local --timeout 0"
   },
   "repository": {
     "type": "git",
